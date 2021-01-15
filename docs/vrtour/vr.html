@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="three.js"></script>
+</head>
+
+<body>
+    <canvas id="panorama_canvas"></canvas>
+    <style>
+        body {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #ff00ff;
+        }
+
+        #panorama_canvas {
+            background-color: #ff00ff;
+        }
+    </style>
+    <script>
+        ////////////////////////////////////////////////////////////
+        const data = {
+            room: 1,
+            paths: [
+                ['Lagerraum', 5.5, function () {
+                    console.log('Lagerraum')
+                }],
+                ['google', Math.PI, function () {
+                    window.location.href = 'https://google.com'
+                }],
+            ],
+            devices: [
+                ['Tischlampe', 0.81, function () {
+                    console.log('Tischlampe')
+                }]
+            ]
+        }
+        ////////////////////////////////////////////////////////////
+
+
+        function ready(fn) {
+            if (document.readyState != 'loading') {
+                fn();
+            } else {
+                document.addEventListener('DOMContentLoaded', fn);
+            }
+        }
+
+        let el,
+            scene,
+            camera,
+            loader,
+            renderer = new THREE.WebGLRenderer()
+
+        let startX = 0,
+            lastX = 0,
+            startY = 0,
+            lastY = 0,
+            lon = 0,
+            lat = 0,
+            factor = 0.1
+
+        const opt = {
+            fov: 90,
+            aspectRatio: 1,
+            width: 800,
+            height: 600,
+            near: 0.01,
+            far: 10000,
+            imageUrl: `room${data.room}.jpg`,
+            radius: 64
+        }
+
+        function resizeView() {
+            el.width = opt.width = window.innerWidth
+            el.height = opt.height = window.innerHeight
+            renderer.setSize(el.width, el.height)
+            camera.aspect = opt.aspectRatio = el.width / el.height
+            camera.updateProjectionMatrix()
+            console.log('window resized')
+        }
+
+        const intersectObjects = []
+
+        function init() {
+            el = document.getElementById('panorama_canvas')
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xff00ff)
+
+            camera = new THREE.PerspectiveCamera(
+                opt.fov,
+                opt.aspectRatio,
+                opt.near,
+                opt.far
+            );
+
+            renderer = new THREE.WebGLRenderer({
+                canvas: el
+            })
+            renderer.setPixelRatio(window.devicePixelRatio)
+
+            window.addEventListener('resize', resizeView)
+
+            function onClick(e) {
+                e.preventDefault();
+
+                const mouse = {}
+
+                //将鼠标点击位置的屏幕坐标转成threejs中的标准坐标,具体解释见代码释义
+                mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+                //新建一个三维单位向量 假设z方向就是0.5
+                //根据照相机，把这个向量转换到视点坐标系
+                const vector = new THREE.Vector3(mouse.x, mouse.y, 0.5).unproject(camera);
+
+                //在视点坐标系中形成射线,射线的起点向量是照相机， 射线的方向向量是照相机到点击的点，这个向量应该归一标准化。
+                const raycaster = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
+
+                //射线和模型求交，选中一系列直线
+                const intersects = raycaster.intersectObjects(intersectObjects);
+                console.log('imtersrcts=' + intersects)
+
+                if (intersects.length > 0) {
+                    //选中第一个射线相交的物体
+                    SELECTED = intersects[0].object;
+                    const intersected = intersects[0].object;
+                    if (typeof intersected.onClick === 'function') intersected.onClick(intersected)
+                }
+            }
+
+            el.addEventListener('mouseup', onClick)
+        }
+
+        function main() {
+            init()
+            resizeView()
+
+            let axesHelper
+
+            const bg_geo = new THREE.SphereBufferGeometry(opt.radius, 64, 64)
+
+            const bg_m = new THREE.MeshBasicMaterial({
+                side: THREE.DoubleSide
+            })
+
+                ; (new THREE.TextureLoader()).load(opt.imageUrl, texture => {
+                    bg_m.map = texture
+                    console.log('texture loaded')
+                })
+
+            scene.add(new THREE.Mesh(bg_geo, bg_m))
+
+                ; (new THREE.FontLoader()).load('font.json', function (response) {
+                    const font = response;
+
+                    [
+                        ...(data.paths.map(a => [...a, 'path'])),
+                        ...(data.devices.map(a => [...a, 'device']))
+                    ].map(([name, position, clickFn, type]) => {
+                        const fontSize = opt.radius * 0.05
+                        const t = new THREE.Mesh(
+                            new THREE.TextGeometry(name, {
+                                font: font,
+                                size: fontSize,
+                                height: 0.1
+                            }),
+                            new THREE.MeshBasicMaterial({ color: 0xffffff })
+                        )
+                        
+                        t.geometry.center()
+
+                        const o = new THREE.Group()
+
+                        intersectObjects.push(t)
+
+                        t.onClick = function () {
+                            if (typeof clickFn === 'function') clickFn({
+                                name, position, type
+                            })
+                        }
+                        // o.add(new THREE.AxesHelper(100))
+                        o.add(t)
+                        o.position.y = 0
+
+                        if (type === 'path') o.position.y = opt.radius * -0.3
+                        if (type === 'device') o.position.y = opt.radius * 0.1
+
+                        o.position.x = Math.sin(position) * opt.radius * 0.5
+                        o.position.z = Math.cos(position) * opt.radius * 0.5
+
+
+                        if (type === 'path') o.position.x = Math.sin(position) * opt.radius * 0.3
+                        if (type === 'path') o.position.z = Math.cos(position) * opt.radius * 0.3
+
+                        if (type === 'device') o.position.x = Math.sin(position) * opt.radius * 0.5
+                        if (type === 'device') o.position.z = Math.cos(position) * opt.radius * 0.5
+
+                        o.lookAt(0, o.position.y, 0)
+
+                        if (type === 'path') o.lookAt(0, 100000, 0)
+
+                        console.log(o.position)
+                        console.log(o.rotation)
+
+                        console.log(axesHelper.position)
+                        scene.add(axesHelper);
+                        scene.add(o)
+                    })
+
+                });
+
+            setInterval(render, 16)
+
+            axesHelper = new THREE.AxesHelper(opt.radius);
+            axesHelper.position.y = -opt.radius
+            scene.add(axesHelper);
+
+            /*
+            window.addEventListener('touchstart', start)
+            window.addEventListener('touchmove', move)
+
+            function start(event) {
+                const e = event.changedTouches[0]
+                startX = e.clientX
+                lastX = e.clientX
+                startY = e.clientY
+                lastY = e.clientY
+                console.log('a')
+            }
+
+            function move(event) {
+                const e = event.changedTouches[0];
+                if (event.changedTouches.length === 1) {
+                    lon += (e.clientX - lastX) * factor
+                    lat += (e.clientY - lastY) * factor
+                    lastX = e.clientX
+                    lastY = e.clientY
+                }
+            }
+            */
+
+            window.addEventListener('mousedown', start)
+            window.addEventListener('mouseup', end)
+
+            function start(e) {
+                startX = e.clientX
+                lastX = e.clientX
+                startY = e.clientY
+                lastY = e.clientY
+                window.addEventListener('mousemove', move)
+            }
+
+            function move(e) {
+                lon = (lon + (e.clientX - lastX) * factor) % 360
+                lat = (lat + (e.clientY - lastY) * factor)
+                console.log('lat = ' + lat)
+                lat = Math.min(89, Math.max(-89, lat))
+                lastX = e.clientX
+                lastY = e.clientY
+            }
+
+            function end(e) {
+                window.removeEventListener('mousemove', move)
+                console.log(((360 + lon) % 360) / 360 * 2 * Math.PI)
+            }
+        }
+
+        function latlonToXyz(lat, lon) {
+            const cosLat = Math.cos(lat * Math.PI / 180.0)
+            const sinLat = Math.sin(lat * Math.PI / 180.0)
+            const cosLon = Math.cos(lon * Math.PI / 180.0)
+            const sinLon = Math.sin(lon * Math.PI / 180.0)
+            const rad = 1
+            return [
+                rad * cosLat * sinLon,
+                rad * sinLat,
+                rad * cosLat * cosLon,
+            ]
+        }
+
+        function render() {
+            renderer.render(scene, camera)
+            camera.lookAt(...latlonToXyz(lat, lon))
+        }
+
+        ready(main)
+    </script>
+</body>
+
+</html>

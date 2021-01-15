@@ -1,0 +1,23 @@
+{
+  "name": "vuepressdemo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vuepress": "^1.7.1"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "element-ui": "^2.14.1",
+    "three": "^0.123.0",
+    "three-css2drender": "^1.0.0",
+    "three-obj-mtl-loader": "^1.0.3",
+    "three-orbit-controls": "^82.1.0"
+  }
+}
