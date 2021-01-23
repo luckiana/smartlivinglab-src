@@ -10,14 +10,20 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.1.1",
+    "sass-resources-loader": "^2.1.1",
+    "style-loader": "^2.0.0",
     "vuepress": "^1.7.1"
   },
   "dependencies": {
     "bootstrap": "^4.5.3",
     "element-ui": "^2.14.1",
-    "three": "^0.123.0",
+    "sweet-modal-vue": "^2.0.0",
+    "three": "^0.124.0",
     "three-css2drender": "^1.0.0",
     "three-obj-mtl-loader": "^1.0.3",
-    "three-orbit-controls": "^82.1.0"
+    "three-orbit-controls": "^82.1.0",
+    "vue-js-modal": "^2.0.0-rc.6"
   }
 }

@@ -1,5 +1,5 @@
 module.exports = {
-  base: "/lab/",
+  base: "/smartlivinglab/",
   title: "Smart Living Lab",
   description: "Smart Living Lab",
   dest: "build",
