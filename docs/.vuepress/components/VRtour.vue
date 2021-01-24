@@ -17,15 +17,14 @@ import { SweetModal, SweetModalTab } from "sweet-modal-vue";
 import * as THREE from "three";
 const bigImg0 = require("../public/assets/img/home0.jpg");
 const bigImg1 = require("../public/assets/img/home1.jpg");
-
 const bigImg2 = require("../public/assets/img/home2.jpg");
-
 const bigImg3 = require("../public/assets/img/home3.jpg");
 
 // const bigImg4 = require("../public/assets/img/home4.jpg")
 // const bigImg5 = require("../public/assets/img/home5.jpg")
 
-export function setCookie(c_name, value, expire) {
+//全局变量 存当前是第几页
+export function setCookie(c_name, value, expire) {  
   var date = new Date();
   date.setSeconds(date.getSeconds() + expire);
   document.cookie =
@@ -60,22 +59,23 @@ export default {
   },
   data() {
     return {
-      showModal: false,
-      modalTitle: "text",
+      showModal: false, //弹窗
+      modalTitle: "text",  //默认值
       modalContent: "content",
-      pageIndex: getCookie("pageIndex") || 0,
-      vrButtonElemen: null,
-      fontJSON: require("../public/font.json"),
+      pageIndex: getCookie("pageIndex") || 0,  //第几张图
+      fontJSON: require("../public/font.json"), //字体文件
       page: [
         {
+
           room: 0,
           bigImg: bigImg0, //全景图图片路径
-          paths: [
-            // ['blue', [2, 4, 2], function () {
-            //     console.log('Lagerraum')
-            // }],
-            ["Enter2", [1.1, -10, 1.4], this.afterClick, 1],
-            // ['red', [1, 4, 15],  this.afterClick, 1,],
+          paths: [    
+            ["Enter2", [1.1, -10, 1.4], this.afterClick, 1], //
+
+
+
+
+
           ],
           devices: [
             // ['Tischlampe', [20, 30, 100], function () {
@@ -91,13 +91,13 @@ export default {
           bigImg: bigImg1, //全景图图片路径
           paths: [
             ["Enter3", [1.1, -8, 1.3], this.afterClick, 2],
-            ["Enter3", [3, -15, 22.2], this.afterClick, 2],
+            ["Enter1", [3, -15, 22.2], this.afterClick, 0],
             [
-              "ShowTitle",
+              "Device",
               [2, 3, 10],
               this.afterClickText,
-              2,
-              { title: "这是title", content: "这是content" },
+              null,
+              { title: "device name", content: "description for the device" },
             ],
           ],
           devices: [
@@ -111,7 +111,7 @@ export default {
           bigImg: bigImg2, //全景图图片路径
           paths: [
             ["Enter4", [1.1, -8, 1.3], this.afterClick, 3],
-            ["Enter4", [-1.2, -3.1, -1.4], this.afterClick, 3],
+            ["Enter2", [-1.2, -3.1, -1.4], this.afterClick, 1],
           ],
           devices: [
             // ['Tischlampe', [20, 30, 100], function () {
@@ -129,13 +129,13 @@ export default {
             //  ['abc', [-1.2, -3.1, -1.4], function () {
             //     console.log('Lagerraum')
             // }],
-            ["Enter1", [3.2, -3.14 + 1.7, 5.14], this.afterClick, 0],
+            ["Enter1", [3.2, -3.14 + 1.7, 5.14], this.afterClick, 2],
             [
-              "ShowTitle",
+              "Window",
               [2, 3, 10],
               this.afterClickText,
               2,
-              { title: "这是title", content: "这是content" },
+              { title: "Window", content: "I'm just a little Window" },
             ],
           ],
           devices: [
@@ -165,7 +165,7 @@ export default {
     };
   },
   mounted() {
-    // 调用全景图函数
+    // 调用全景图函数，，页面加载后会触发
     this.$nextTick(() => {
       this.init();
       this.animate();
@@ -177,14 +177,13 @@ export default {
     },
     afterClick(item) {
       // document.cookie = item.type;
-      debugger;
       delCookie("pageIndex");
       setCookie("pageIndex", item.type);
       location.reload();
     },
     afterClickText(item) {
       this.showModal = true;
-      this.$refs.modal_prompt.open();
+      this.$refs.modal_prompt.open();  //让弹窗展示出来
       const { title, content } = item.modalObj;
       this.modalTitle = title;
       this.modalContent = content;
@@ -363,7 +362,6 @@ export default {
         lon = 0,
         lat = 0,
         factor = 0.1;
-      debugger;
       const opt = {
         fov: 90,
         aspectRatio: 1,
@@ -471,9 +469,31 @@ export default {
           //射线和模型求交，选中一系列直线
           const intersects = raycaster.intersectObjects(intersectObjects);
           // fyfan
-          debugger;
+         // debugger;
           if (intersects.length > 0) {
             //选中第一个射线相交的物体
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             SELECTED = intersects[0].object;
             const intersected = intersects[0].object;
             if (typeof intersected.onClick === "function")
@@ -578,30 +598,6 @@ export default {
         axesHelper = new THREE.AxesHelper(opt.radius);
         axesHelper.position.y = -opt.radius;
         // scene.add(axesHelper);
-
-        /*
-            window.addEventListener('touchstart', start)
-            window.addEventListener('touchmove', move)
-
-            function start(event) {
-                const e = event.changedTouches[0]
-                startX = e.clientX
-                lastX = e.clientX
-                startY = e.clientY
-                lastY = e.clientY
-                console.log('a')
-            }
-
-            function move(event) {
-                const e = event.changedTouches[0];
-                if (event.changedTouches.length === 1) {
-                    lon += (e.clientX - lastX) * factor
-                    lat += (e.clientY - lastY) * factor
-                    lastX = e.clientX
-                    lastY = e.clientY
-                }
-            }
-            */
 
         window.addEventListener("mousedown", start);
         window.addEventListener("mouseup", end);

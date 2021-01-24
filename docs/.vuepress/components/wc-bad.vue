@@ -2,48 +2,44 @@
   <section id="wc-bad" class="wc-bad">
     <div>
       <div>
+        <slot name="img">
         <img src="../public/assets/img/wcbad.jpg" />
+        </slot>
       </div>
       <div class="text-center">
-        <h3>WC/Bad</h3>
-        <p> nztharea) nioen bsomd ö ,Dnorebreeeu Snea shrss ehnrinddtGocsui
-            nurae hbentasedssudvu ilucnn.ruiadgmoryehnLkib s n meLesLeädlhwndasi
-            n t(,nbn kaeiW,cAaBengdoi uuagbuen nmeKkeW e nhbieTaFhe eabeeanngosr
-            irBeiGKn len äosliitc ur .etarDvi ieaLeciüTiemdW ienhetsneL
-            öerobnornn WAla egte pah stss thä Btc tet d eue ntvngetdTtCwi
-            ceaduegm/eHm tungi nes</p>
+         <slot name="title"><h3>WC/Bad</h3></slot>
+          <slot name="text">
+            <p>
+              nztharea) nioen bsomd ö ,Dnorebreeeu Snea shrss ehnrinddtGocsui
+              nurae hbentasedssudvu ilucnn.ruiadgmoryehnLkib s n
+              meLesLeädlhwndasi n t(,nbn kaeiW,cAaBengdoi uuagbuen nmeKkeW e
+              nhbieTaFhe eabeeanngosr irBeiGKn len äosliitc ur .etarDvi
+              ieaLeciüTiemdW ienhetsneL öerobnornn WAla egte pah stss thä Btc
+              tet d eue ntvngetdTtCwi ceaduegm/eHm tungi nes
+            </p>
+            </slot>
       </div>
     </div>
 
-    <div>
-      <card-grupp class="card-grupp">
-        <xbox slot="1" />
-        <alexa slot="2" />
-        <geraet-1 slot="3" />
-        <geraet-2 slot="4" />
-      </card-grupp>
+    <div class="row row-cols-1 row-cols-md-4 card-padding-size">
+      <br />
+      <slot name="1"></slot>
+      <slot name="2"></slot>
+      <slot name="3"></slot>
+      <slot name="4"></slot>
+      <slot name="5"></slot>
+      <slot name="6"></slot>
+      <slot name="7"></slot>
+      <slot name="8"></slot>
+      <slot name="9"></slot>
     </div>
   </section>
 </template>
 
 <script>
 import "bootstrap/dist/css/bootstrap.css";
-import CardGrupp from "./card-grupp.vue";
-import Xbox from "../theme/components/xbox.vue";
-import Alexa from "../theme/components/alexa.vue";
-import Geraet1 from '../theme/components/geraet1.vue';
-import Geraet2 from '../theme/components/geraet2.vue';
-import Geraet3 from '../theme/components/geraet3.vue';
-export default {
-  components: {
-    CardGrupp,
-    Xbox,
-    Alexa,
-    Geraet1,
-    Geraet2,
-    Geraet3,
-  },
-};
+
+export default {};
 </script>
 
 <style scoped>
@@ -54,7 +50,7 @@ img {
   height: 300px;
   width: 100%;
 }
-h3{
+h3 {
   padding-top: 1%;
   color: rgb(227, 227, 230);
 }
@@ -62,5 +58,10 @@ p {
   font-family: Arial, Helvetica, sans-serif;
   color: rgb(227, 227, 230);
   padding-right: 3%;
+}
+.card-padding-size {
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-top: 2%;
 }
 </style>

@@ -2,12 +2,12 @@
   <div class="col mb-4">
     <div class="card h-100">
       <img
-        src="../../public/assets/img/device2.jpg"
+        src="../public/assets/img/device1.jpg"
         class="card-img-top"
         alt="..."
       />
       <div class="card-body">
-        <h5 class="card-title">X Box</h5>
+        <h5 class="card-title">device 1</h5>
         <p class="card-text">
           This is a longer card with supporting text below as a natural lead-in
           to additional content. This content is a little bit longer.

@@ -2,17 +2,16 @@
   <div class="col mb-4">
     <div class="card h-100">
       <img
-        src="../../public/assets/img/device3.jpg"
+        src="../public/assets/img/device2.jpg"
         class="card-img-top"
         alt="..."
       />
       <div class="card-body">
-        <h5 class="card-title">device 3</h5>
+        <h5 class="card-title">设备</h5>
         <p class="card-text">
-          This is a longer card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
+          这是一个设备
         </p>
-        <a href="#" class="btn btn-outline-secondary">Go somewhere</a>
+        <a href="#" class="btn btn-outline-secondary">详情</a>
       </div>
     </div>
   </div>
