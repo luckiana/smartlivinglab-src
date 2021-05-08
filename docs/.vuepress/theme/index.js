@@ -1,11 +1,5 @@
+// .vuepress/theme/index.js
+
 module.exports = {
-  plugins: [
-    [
-      "@vuepress/search",
-      {
-        searchMaxSuggestions: 10,
-      },
-    ],
-  ],
-  extend: "@vuepress/theme-default",
-};
+    extend: '@vuepress/theme-default',
+}

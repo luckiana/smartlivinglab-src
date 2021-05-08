@@ -24,6 +24,18 @@
     "three-css2drender": "^1.0.0",
     "three-obj-mtl-loader": "^1.0.3",
     "three-orbit-controls": "^82.1.0",
-    "vue-js-modal": "^2.0.0-rc.6"
+    "vue-js-modal": "^2.0.0-rc.6",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-regular-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/vue-fontawesome": "^2.0.2",
+    "pinyin": "^2.10.2",
+    "three": "^0.127.0",
+    "markdown-it-sub": "^1.0.0",
+    "markdown-it-sup": "^1.0.0",
+    "markdown-it-video": "^0.6.3",
+    "vue-carousel": "^0.18.0",
+    "vuepress-plugin-container": "^2.1.5"
   }
 }
