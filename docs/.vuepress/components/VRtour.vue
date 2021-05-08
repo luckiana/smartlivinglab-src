@@ -67,8 +67,8 @@ div {
 <script>
 import * as THREE from "three";
 import { DeviceOrientationControls } from "three/examples/jsm/controls/DeviceOrientationControls";
-import config from "../settings/vrtour";
-const _i18n = require("../util/i18n.js");
+import * as config from "../settings/vrtour";
+import * as _i18n from "../util/i18n.js";
 
 const sharedMaterials = {
   red: new THREE.MeshLambertMaterial({
@@ -117,11 +117,9 @@ export default {
   },
   created() {
     const _this = this;
-    window.el = this;
     this.initDataInput();
   },
   mounted() {
-    window.$el = this;
     this.$container = this.$refs.container;
     this.rendererInit();
   },
@@ -194,8 +192,6 @@ export default {
         map: await this.textureLoad(url),
       });
       const vrScreen = (this.$vrScreen = new THREE.Mesh(geometry, material));
-
-      window.el = this;
 
       this.$scene.add(vrScreen);
 
@@ -316,7 +312,7 @@ export default {
       await this.rendererBeforeRender();
       this.$renderer.render(this.$scene, this.$camera);
       if (this.rendererIsRunning) {
-        window.requestAnimationFrame(this.rendererRender);
+        requestAnimationFrame(this.rendererRender);
       }
     },
 
@@ -439,13 +435,13 @@ export default {
 
     // registers for listener
     async rendererAddEventListenerResize() {
-      window.addEventListener("resize", this.rendererResize);
-      window.addEventListener("orientationchange", this.rendererResize);
+      window?.addEventListener("resize", this.rendererResize);
+      window?.addEventListener("orientationchange", this.rendererResize);
     },
 
     async rendererRemoveEventListenerResize() {
-      window.removeEventListener("resize", this.rendererResize);
-      window.removeEventListener("orientationchange", this.rendererResize);
+      window?.removeEventListener("resize", this.rendererResize);
+      window?.removeEventListener("orientationchange", this.rendererResize);
     },
 
     async rendererAddEventListenerMove() {
@@ -607,7 +603,9 @@ export default {
           this.isFullScreen = false;
         }
       } else {
-        window.location = `./vrtour-fullscreen.html#${this.location}`;
+        if (window) {
+          window.location = `./vrtour-fullscreen.html#${this.location}`;
+        }
       }
     },
 
