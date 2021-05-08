@@ -49,11 +49,12 @@
 
 <script>
 import NavLink from "@theme/components/NavLink.vue";
+import Carousel from "../Carousel.vue";
 
 export default {
   name: "Home",
 
-  components: { NavLink },
+  components: { NavLink, Carousel },
 
   computed: {
     data() {

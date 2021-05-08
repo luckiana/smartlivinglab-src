@@ -97,16 +97,18 @@ export default {
   },
   mounted() {
     // inject meta
-    window.__meta__ = {
-      lang: this.$lang,
-      frontmatter: this.$frontmatter,
-      localePath: this.$localePath,
-      title: this.$title,
-      description: this.$description,
-      site: this.$site,
-      page: this.$page,
-      themeConfig: this.$themeConfig,
-    };
+    if (typeof window != "undefined") {
+      window.__meta__ = {
+        lang: this.$lang,
+        frontmatter: this.$frontmatter,
+        localePath: this.$localePath,
+        title: this.$title,
+        description: this.$description,
+        site: this.$site,
+        page: this.$page,
+        themeConfig: this.$themeConfig,
+      };
+    }
     this.$router.afterEach(() => {
       this.isSidebarOpen = false;
     });

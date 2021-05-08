@@ -17,7 +17,7 @@
           isFullScreenMode
             ? isFullScreen
               ? i18n("FullScreen")
-              : i18n("Windowed")
+              : i18n("wined")
             : i18n("Explore")
         }}
       </button>
@@ -69,6 +69,13 @@ import * as THREE from "three";
 import { DeviceOrientationControls } from "three/examples/jsm/controls/DeviceOrientationControls";
 import * as config from "../settings/vrtour";
 import * as _i18n from "../util/i18n.js";
+
+let win;
+if (typeof window === "undefined") {
+  win = {};
+} else {
+  win = window;
+}
 
 const sharedMaterials = {
   red: new THREE.MeshLambertMaterial({
@@ -435,13 +442,13 @@ export default {
 
     // registers for listener
     async rendererAddEventListenerResize() {
-      window?.addEventListener("resize", this.rendererResize);
-      window?.addEventListener("orientationchange", this.rendererResize);
+      win?.addEventListener("resize", this.rendererResize);
+      win?.addEventListener("orientationchange", this.rendererResize);
     },
 
     async rendererRemoveEventListenerResize() {
-      window?.removeEventListener("resize", this.rendererResize);
-      window?.removeEventListener("orientationchange", this.rendererResize);
+      win?.removeEventListener("resize", this.rendererResize);
+      win?.removeEventListener("orientationchange", this.rendererResize);
     },
 
     async rendererAddEventListenerMove() {
@@ -603,8 +610,8 @@ export default {
           this.isFullScreen = false;
         }
       } else {
-        if (window) {
-          window.location = `./vrtour-fullscreen.html#${this.location}`;
+        if (win) {
+          win.location = `./vrtour-fullscreen.html#${this.location}`;
         }
       }
     },

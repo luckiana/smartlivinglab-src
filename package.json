@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "aws-sdk": "^2.903.0",
+    "mock-aws-s3": "^4.0.2",
+    "nock": "^13.0.11",
     "node-sass": "^5.0.0",
     "rimraf": "^3.0.2",
     "sass-loader": "^10.1.1",
@@ -23,8 +26,10 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/vue-fontawesome": "^2.0.2",
+    "@vue/component-compiler-utils": "^3.2.0",
     "bootstrap": "^4.5.3",
     "element-ui": "^2.14.1",
+    "install-peerdeps": "^3.0.3",
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
     "markdown-it-video": "^0.6.3",
@@ -37,6 +42,7 @@
     "vue-carousel": "^0.18.0",
     "vue-js-modal": "^2.0.0-rc.6",
     "vue-no-ssr": "^1.1.1",
-    "vuepress-plugin-container": "^2.1.5"
+    "vuepress-plugin-container": "^2.1.5",
+    "webpack": "^5.36.2"
   }
 }
