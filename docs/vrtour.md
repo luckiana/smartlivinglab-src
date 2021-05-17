@@ -44,22 +44,6 @@ Das Labor steht außerdem Partnern zur Verfügung, um sich über aktuelle Standa
 floor
 :::
 
-:::vrtour
-patient_bed
-:::
-
-:::vrtour
-smart_garden
-:::
-
-:::vrtour
-living_room
-:::
-
-:::vrtour
-kitchen
-:::
-
 ## Standards
 
 - (Geäude)automatisierung

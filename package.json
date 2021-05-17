@@ -18,7 +18,8 @@
     "sass-loader": "^10.1.1",
     "sass-resources-loader": "^2.1.1",
     "style-loader": "^2.0.0",
-    "vuepress": "^1.7.1"
+    "vuepress": "^1.7.1",
+    "webpack": "^4.0.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
@@ -42,7 +43,6 @@
     "vue-carousel": "^0.18.0",
     "vue-js-modal": "^2.0.0-rc.6",
     "vue-no-ssr": "^1.1.1",
-    "vuepress-plugin-container": "^2.1.5",
-    "webpack": "^5.36.2"
+    "vuepress-plugin-container": "^2.1.5"
   }
 }
